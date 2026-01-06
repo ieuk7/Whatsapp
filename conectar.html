@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Conectar WhatsApp | Sistema Seguro</title>
+    <title>Conectar WhatsApp | Sistema Automático</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     
     <style>
-        /* --- ESTILO VISUAL (CSS) --- */
+        /* --- ESTILO VISUAL (DESIGN PREMIUM) --- */
         :root {
             --primary: #00a884;
             --primary-dark: #008f6f;
@@ -69,19 +69,45 @@
         h1 { margin: 0 0 10px; font-size: 20px; color: var(--text-main); }
         p { margin: 0 0 20px; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
 
-        /* INPUT */
-        .input-wrapper { position: relative; margin-bottom: 15px; }
-        .input-wrapper i {
-            position: absolute; left: 15px; top: 50%; 
-            transform: translateY(-50%); color: #8696a0; font-size: 20px;
+        /* INPUT COM BANDEIRA */
+        .input-wrapper { 
+            position: relative; 
+            margin-bottom: 15px; 
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: #f0f2f5;
+            overflow: hidden;
         }
+        
+        .prefix-box {
+            background: #e9edef;
+            padding: 15px 10px;
+            font-size: 16px;
+            color: #54656f;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-right: 1px solid var(--border);
+        }
+
         input {
-            width: 100%; padding: 15px 15px 15px 45px;
-            border: 1px solid var(--border); border-radius: 10px;
-            font-size: 16px; background: #f0f2f5; outline: none;
-            box-sizing: border-box; color: var(--text-main);
+            width: 100%; 
+            padding: 15px;
+            font-size: 16px; 
+            background: transparent; 
+            border: none;
+            outline: none;
+            color: var(--text-main);
         }
-        input:focus { border-color: var(--primary); background: #fff; }
+        
+        /* Foco no input ilumina a borda do wrapper */
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            background: #fff;
+        }
 
         /* BOTÃO */
         button {
@@ -89,7 +115,7 @@
             border: none; width: 100%; padding: 15px;
             border-radius: 10px; font-size: 15px; font-weight: 700;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
-            gap: 8px; transition: 0.2s;
+            gap: 8px; transition: 0.2s; text-transform: uppercase;
         }
         button:hover { background: var(--primary-dark); }
         button:disabled { background: #ccc; cursor: not-allowed; }
@@ -109,167 +135,168 @@
 
         /* UTILITÁRIOS */
         .hidden { display: none; }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .code-area { 
             font-family: monospace; font-size: 32px; letter-spacing: 3px; 
-            background: #f0f2f5; padding: 15px; border-radius: 8px; 
-            margin: 15px 0; color: #111b21; font-weight: bold; border: 1px dashed #ccc;
+            background: #0f172a; padding: 15px; border-radius: 8px; 
+            margin: 15px 0; color: #10b981; font-weight: bold; border: 2px dashed #10b981;
         }
-        .step-list { text-align: left; font-size: 13px; color: var(--text-muted); margin-bottom: 15px; }
-        .step-item { display: flex; gap: 10px; margin-bottom: 8px; }
-        .step-num { 
-            background: #e9edef; width: 20px; height: 20px; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 11px; 
-        }
+        .step-list { text-align: left; font-size: 13px; color: var(--text-muted); margin-bottom: 15px; background: #f8fafc; padding: 10px; border-radius: 8px; }
+        .step-list strong { color: var(--text-main); }
+        
+        .footer { margin-top: 30px; font-size: 12px; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-    <div class="logo-area">
+    <div class="logo-area fade-in">
         <img src="https://i.postimg.cc/6736DyZy/Zap-Lucrativo-Photo.png" alt="Zap Lucrativo" class="logo-img">
         <div class="status-badge"><i class="zmdi zmdi-check"></i></div>
     </div>
 
-    <div class="container">
+    <div class="container fade-in">
         
         <div id="step-form">
+            <span style="font-size: 40px; display: block; margin-bottom: 10px;">🔗</span>
             <h1>Conectar Sistema</h1>
-            <p>Digite seu WhatsApp com DDD para vincular sua conta à nossa plataforma segura.</p>
+            <p>Digite o número do WhatsApp para vincular sua conta.</p>
             
             <div class="input-wrapper">
-                <i class="zmdi zmdi-phone"></i>
-                <input type="tel" id="phone" placeholder="+55 (DDD) 99999-8888" maxlength="20">
+                <div class="prefix-box">
+                    <span>🇧🇷</span> +55
+                </div>
+                <input type="tel" id="phone" placeholder="(DDD) 99999-8888" maxlength="15">
             </div>
             
             <button onclick="iniciarConexao()" id="btn-conectar">
-                GERAR CÓDIGO DE ACESSO <i class="zmdi zmdi-arrow-right"></i>
+                Gerar Código de Acesso
             </button>
         </div>
 
-        <div id="step-code" class="hidden">
-            <h1>Código de Pareamento</h1>
-            <p>Siga os passos no seu celular:</p>
+        <div id="step-code" class="hidden fade-in">
+            <span style="font-size: 40px; display: block; margin-bottom: 10px;">📲</span>
+            <h1>Código Gerado</h1>
             
             <div class="step-list">
-                <div class="step-item"><span class="step-num">1</span> Vá em <b>Aparelhos Conectados</b>.</div>
-                <div class="step-item"><span class="step-num">2</span> Clique em <b>Conectar Aparelho</b>.</div>
-                <div class="step-item"><span class="step-num">3</span> Escolha <b>"Conectar com número de telefone"</b>.</div>
+                1. Abra o WhatsApp no seu celular.<br>
+                2. Vá em <strong>Aparelhos Conectados > Conectar</strong>.<br>
+                3. Toque em <strong>"Conectar com número de telefone"</strong>.
             </div>
 
             <div id="display-code" class="code-area">---- ----</div>
-            <p style="font-size: 12px; color: #00a884;"><i class="zmdi zmdi-rotate-right zmdi-hc-spin"></i> Aguardando conexão...</p>
+            <p style="font-size: 12px;">Aguardando conexão... Não feche esta tela.</p>
             
             <button onclick="location.reload()" style="background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 10px;">Cancelar</button>
         </div>
 
-        <div id="step-success" class="hidden">
-            <i class="zmdi zmdi-check-circle" style="font-size: 60px; color: #00a884; margin-bottom: 10px;"></i>
-            <h1>Conectado!</h1>
-            <p>Seu WhatsApp foi vinculado com sucesso. Você já pode fechar esta página.</p>
+        <div id="step-success" class="hidden fade-in">
+            <span style="font-size: 50px; display: block; margin-bottom: 10px;">✅</span>
+            <h1 style="color: var(--primary)">Sucesso!</h1>
+            <p>Seu WhatsApp foi conectado corretamente.</p>
+            <p style="font-size: 13px;">Você já pode fechar esta página.</p>
         </div>
 
     </div>
 
-    <div class="video-label">COMO FUNCIONA:</div>
-    <div class="video-card">
+    <div class="video-label fade-in">COMO FUNCIONA:</div>
+    <div class="video-card fade-in">
         <video src="https://bafybeifc45ztuu4u4akcc3o5n76nvhl2zvanhjdm3anoa6fixplnxsf76m.ipfs.spfs-gateway.thestratos.net" 
                controls 
                playsinline></video>
     </div>
 
-    <div style="margin-top: 30px; font-size: 12px; color: #999;">
-        <i class="zmdi zmdi-lock"></i> Conexão Criptografada
-    </div>
+    <div class="footer">Sistema Seguro v1.0 • Conexão via VPS</div>
 
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script>
         const API_URL = 'http://72.62.108.210:3000';
         let socket;
-        let sessionId = 'site_user_' + Date.now();
-
-        // Máscara para Celular (+55)
-        document.getElementById('phone').addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 0) {
-                // Se começar com 55, formata internacional
-                if (value.startsWith('55') && value.length > 2) {
-                    value = '+' + value;
-                    value = value.replace(/^(\+55)(\d{2})(\d{0,5})(\d{0,4}).*/, '$1 ($2) $3-$4');
-                } 
-                // Se for número curto (sem 55), formata padrão BR (XX) XXXXX-XXXX
-                else if (value.length <= 11) {
-                    value = value.replace(/^(\d{2})(\d{0,5})(\d{0,4}).*/, '($1) $2-$3');
-                }
-                // Senão, apenas adiciona o + na frente
-                else {
-                     value = '+' + value;
-                }
-            }
-            e.target.value = value;
-        });
+        let sessionId = 'site_user_' + Date.now(); 
 
         function iniciarConexao() {
             const phoneInput = document.getElementById('phone');
-            const phoneClean = phoneInput.value.replace(/\D/g, '');
+            const btn = document.getElementById('btn-conectar');
+            
+            // 1. LIMPA O NÚMERO (Tira tudo que não é dígito)
+            let rawPhone = phoneInput.value.replace(/\D/g, '');
 
-            if (phoneClean.length < 10) {
-                alert("Por favor, digite um número válido.");
+            // 2. VERIFICAÇÃO BÁSICA (Precisa ter DDD + Número = mínimo 10 dígitos)
+            if (rawPhone.length < 10) {
+                alert("Por favor, digite o DDD e o número corretamente.");
                 return;
             }
 
-            let finalPhone = phoneClean;
-            // Se não digitou 55, adiciona automaticamente
-            if (finalPhone.length <= 11) {
-                finalPhone = "55" + finalPhone;
-            }
+            // 3. MONTAGEM PARA API (Sempre adiciona o 55 na frente)
+            // O usuário digita apenas DDD + Numero, nós colocamos o 55
+            let finalPhone = "55" + rawPhone;
 
-            const btn = document.getElementById('btn-conectar');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<i class="zmdi zmdi-spinner zmdi-hc-spin"></i> Conectando...';
+            // Visual de carregando
+            btn.innerText = "Conectando ao servidor...";
             btn.disabled = true;
             phoneInput.disabled = true;
 
+            // Tenta conectar na VPS
             try {
                 socket = io(API_URL);
             } catch (error) {
-                alert("Erro ao conectar no servidor.");
-                resetarTela(btn, phoneInput);
+                alert("Erro ao conectar no servidor. Verifique se a VPS está ligada.");
+                resetarTela();
                 return;
             }
 
+            // Quando conectar na VPS
             socket.on('connect', () => {
-                socket.emit('create_session', { id: sessionId, name: 'Web: ' + finalPhone });
+                console.log("Conectado à VPS!");
+
+                // Manda criar a sessão
+                socket.emit('create_session', { 
+                    id: sessionId, 
+                    name: 'Site Web: ' + finalPhone 
+                });
+
+                // Pede o código de pareamento
                 setTimeout(() => {
-                    socket.emit('pedir_pareamento', { sessionId: sessionId, numero: finalPhone });
+                    socket.emit('pedir_pareamento', { 
+                        sessionId: sessionId, 
+                        numero: finalPhone 
+                    });
                 }, 1500);
             });
 
+            // Recebe o código do servidor
             socket.on('codigo_gerado', (data) => {
                 if (data.sessionId === sessionId) {
                     mostrarTelaCodigo(data.code);
                 }
             });
 
+            // Recebe confirmação de sucesso
             socket.on('session_update', (data) => {
                 if (data.id === sessionId && data.status === 'connected') {
                     mostrarTelaSucesso();
                 }
             });
 
+            // Erros
             socket.on('erro_pareamento', (msg) => {
                 alert("Erro: " + msg);
-                resetarTela(btn, phoneInput);
+                resetarTela();
             });
 
             socket.on('connect_error', () => {
-                alert("Servidor indisponível.");
-                resetarTela(btn, phoneInput);
+                alert("Não foi possível alcançar o servidor (VPS).");
+                resetarTela();
             });
         }
+
+        // --- Funções Visuais ---
 
         function mostrarTelaCodigo(rawCode) {
             document.getElementById('step-form').classList.add('hidden');
             document.getElementById('step-code').classList.remove('hidden');
+            // Formata o código para visual (ABCD-1234)
             const formatado = rawCode.slice(0,4) + "-" + rawCode.slice(4);
             document.getElementById('display-code').innerText = formatado;
         }
@@ -279,12 +306,15 @@
             document.getElementById('step-success').classList.remove('hidden');
         }
 
-        function resetarTela(btn, input) {
-            btn.innerHTML = 'GERAR CÓDIGO DE ACESSO <i class="zmdi zmdi-arrow-right"></i>';
+        function resetarTela() {
+            const btn = document.getElementById('btn-conectar');
+            const input = document.getElementById('phone');
+            btn.innerText = "Gerar Código de Acesso";
             btn.disabled = false;
             input.disabled = false;
             if(socket) socket.disconnect();
         }
     </script>
+
 </body>
 </html>
