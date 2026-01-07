@@ -5,151 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Conectar WhatsApp | Sistema Automático</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-    
-    <style>
-        /* --- ESTILO VISUAL (DESIGN PREMIUM) --- */
-        :root {
-            --primary: #00a884;
-            --primary-dark: #008f6f;
-            --bg-page: #e0e5ec;
-            --bg-card: #ffffff;
-            --text-main: #111b21;
-            --text-muted: #54656f;
-            --border: #e9edef;
-            --shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-page);
-            background-image: radial-gradient(circle at 50% -20%, #dcf8c6 0%, var(--bg-page) 60%);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* LOGO */
-        .logo-area {
-            margin-bottom: 20px;
-            position: relative;
-            text-align: center;
-        }
-        .logo-img {
-            width: 80px; height: 80px; 
-            border-radius: 50%; 
-            object-fit: cover;
-            border: 4px solid #fff; 
-            box-shadow: 0 4px 10px rgba(0, 168, 132, 0.2);
-        }
-        .status-badge {
-            position: absolute; bottom: 5px; right: 0; 
-            background: #00a884; color: white; 
-            border-radius: 50%; width: 22px; height: 22px;
-            display: flex; align-items: center; justify-content: center;
-            border: 2px solid #fff; font-size: 12px;
-        }
-
-        /* CONTAINER PRINCIPAL */
-        .container {
-            background: var(--bg-card);
-            width: 100%;
-            max-width: 380px;
-            padding: 30px 25px;
-            border-radius: 18px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        h1 { margin: 0 0 10px; font-size: 20px; color: var(--text-main); }
-        p { margin: 0 0 20px; font-size: 14px; color: var(--text-muted); line-height: 1.5; }
-
-        /* INPUT COM BANDEIRA */
-        .input-wrapper { 
-            position: relative; 
-            margin-bottom: 15px; 
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: #f0f2f5;
-            overflow: hidden;
-        }
-        
-        .prefix-box {
-            background: #e9edef;
-            padding: 15px 10px;
-            font-size: 16px;
-            color: #54656f;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border-right: 1px solid var(--border);
-        }
-
-        input {
-            width: 100%; 
-            padding: 15px;
-            font-size: 16px; 
-            background: transparent; 
-            border: none;
-            outline: none;
-            color: var(--text-main);
-        }
-        
-        /* Foco no input ilumina a borda do wrapper */
-        .input-wrapper:focus-within {
-            border-color: var(--primary);
-            background: #fff;
-        }
-
-        /* BOTÃO */
-        button {
-            background: var(--primary); color: white;
-            border: none; width: 100%; padding: 15px;
-            border-radius: 10px; font-size: 15px; font-weight: 700;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            gap: 8px; transition: 0.2s; text-transform: uppercase;
-        }
-        button:hover { background: var(--primary-dark); }
-        button:disabled { background: #ccc; cursor: not-allowed; }
-
-        /* VÍDEO CARD */
-        .video-label {
-            font-size: 12px; font-weight: 700; color: var(--text-muted);
-            text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px;
-        }
-        .video-card {
-            width: 100%; max-width: 380px;
-            border-radius: 16px; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            background: #000; border: 3px solid #fff;
-        }
-        video { width: 100%; display: block; }
-
-        /* UTILITÁRIOS */
-        .hidden { display: none; }
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .code-area { 
-            font-family: monospace; font-size: 32px; letter-spacing: 3px; 
-            background: #0f172a; padding: 15px; border-radius: 8px; 
-            margin: 15px 0; color: #10b981; font-weight: bold; border: 2px dashed #10b981;
-        }
-        .step-list { text-align: left; font-size: 13px; color: var(--text-muted); margin-bottom: 15px; background: #f8fafc; padding: 10px; border-radius: 8px; }
-        .step-list strong { color: var(--text-main); }
-        
-        .footer { margin-top: 30px; font-size: 12px; color: #94a3b8; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="connect-page">
 
     <div class="logo-area fade-in">
         <img src="https://i.postimg.cc/6736DyZy/Zap-Lucrativo-Photo.png" alt="Zap Lucrativo" class="logo-img">
@@ -211,7 +69,7 @@
 
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script>
-        const API_URL = 'http://72.62.108.210:3000';
+        const API_URL = 'https://tunes-houston-count-balloon.trycloudflare.com';
         let socket;
         let sessionId = 'site_user_' + Date.now(); 
 
