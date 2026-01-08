@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Consulta de Benefício Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="quiz-page">
+
+    <div class="quiz-card fade-in">
+        
+        <div id="etapa-quiz">
+            <div class="progress-bar-container">
+                <div id="progress" class="progress-bar-fill"></div>
+            </div>
+
+            <div class="logo-area" style="margin-bottom: 20px;">
+                <img src="https://i.postimg.cc/6736DyZy/Zap-Lucrativo-Photo.png" alt="Logo" class="quiz-logo">
+            </div>
+
+            <div id="question-text" class="quiz-question">
+                <h2>Carregando...</h2>
+            </div>
+
+            <div id="options-area" class="quiz-options">
+                </div>
+        </div>
+
+        <div id="etapa-loading" class="hidden">
+            <div class="analyzing-container">
+                <div class="spinner"></div>
+                <h3 style="color: var(--text-main); margin-top: 15px;">Aguarde...</h3>
+                <p id="analyzing-step" style="color: var(--text-muted); font-size: 14px; margin-top: 5px;">
+                    Conectando ao sistema...
+                </p>
+            </div>
+        </div>
+
+        <div id="etapa-final" class="hidden">
+            <div style="font-size: 50px; margin-bottom: 10px;">🤑</div>
+            <h2 class="share-title">Bônus Aprovado!</h2>
+            <p class="share-subtitle">Seu número foi selecionado no programa.</p>
+
+            <div class="saldo-box">
+                <div class="saldo-text">Saldo disponível para saque:</div>
+                <div class="saldo-value">R$ 150,00</div>
+            </div>
+
+            <p style="font-size: 13px; margin-bottom: 20px; color: #ef4444; font-weight: 600; background: #fee2e2; padding: 10px; border-radius: 8px; border: 1px solid #fecaca;">
+                <i class="zmdi zmdi-lock"></i> <b>BLOQUEADO:</b> Para liberar o saque imediato do seu bônus, divulgue o programa para 5 amigos ou grupos no WhatsApp.
+            </p>
+
+            <a href="#" onclick="compartilharZap()" class="btn-whatsapp-share">
+                <i class="zmdi zmdi-whatsapp"></i> COMPARTILHAR PARA SACAR
+            </a>
+
+            <button id="btn-final-continue" onclick="verificarCompartilhamento()" class="btn-continue">
+                REALIZAR SAQUE AGORA
+            </button>
+        </div>
+
+    </div>
+
+    <div style="position: fixed; bottom: 10px; color: rgba(255,255,255,0.6); font-size: 11px;">
+        © 2024 Programa de Incentivo Digital
+    </div>
+
+    <script>
+        // --- COPYWRITING: PERGUNTAS "MÃO BEIJADA" ---
+        const questions = [
+            {
+                text: "Você possui o WhatsApp instalado no seu celular?",
+                options: ["Sim, eu tenho", "Não tenho"]
+            },
+            {
+                text: "Você costuma ficar online todos os dias?",
+                options: ["Sim, todo dia", "Às vezes"]
+            },
+            {
+                text: "Você sabia que existe um 'Saldo de Incentivo' parado para usuários ativos?",
+                options: ["Sério? Quero saber", "Não sabia"]
+            },
+            {
+                text: "Você possui Chave PIX cadastrada para receber transferências?",
+                options: ["Sim, Chave CPF/Celular", "Sim, Chave Aleatória", "Não tenho"]
+            },
+            {
+                text: "Podemos verificar se o seu número tem direito a R$ 150,00 agora?",
+                options: ["Sim! Verificar agora", "Não tenho interesse"]
+            }
+        ];
+
+        let currentQ = 0;
+        let shareClicked = false;
+
+        // --- INICIALIZAÇÃO ---
+        window.onload = () => {
+            renderQuestion();
+        };
+
+        // --- FUNÇÃO PARA TROCAR DE TELA ---
+        function mostrarTela(idTela) {
+            document.getElementById('etapa-quiz').classList.add('hidden');
+            document.getElementById('etapa-loading').classList.add('hidden');
+            document.getElementById('etapa-final').classList.add('hidden');
+            document.getElementById(idTela).classList.remove('hidden');
+        }
+
+        // --- LÓGICA DO QUIZ ---
+        function renderQuestion() {
+            mostrarTela('etapa-quiz');
+            const progressPercent = ((currentQ) / questions.length) * 100;
+            document.getElementById('progress').style.width = progressPercent + "%";
+
+            const q = questions[currentQ];
+            document.getElementById('question-text').innerHTML = `<h2>${q.text}</h2>`;
+            
+            const opts = document.getElementById('options-area');
+            opts.innerHTML = ''; 
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('div');
+                btn.className = 'quiz-btn';
+                btn.innerHTML = `<span>${opt}</span> <i class="zmdi zmdi-chevron-right"></i>`;
+                btn.onclick = () => { setTimeout(nextQuestion, 200); };
+                opts.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() {
+            currentQ++;
+            if (currentQ < questions.length) {
+                renderQuestion();
+            } else {
+                document.getElementById('progress').style.width = "100%";
+                iniciarAnalise();
+            }
+        }
+
+        // --- LÓGICA DE ANÁLISE (COPYWRITING: DINHEIRO FÁCIL) ---
+        function iniciarAnalise() {
+            mostrarTela('etapa-loading');
+
+            const steps = [
+                "Verificando tempo de atividade...",
+                "Consultando base de usuários...",
+                "Validando elegibilidade do número...",
+                "Aprovando bonificação...",
+                "Gerando link de saque..."
+            ];
+
+            let stepIndex = 0;
+            const textEl = document.getElementById('analyzing-step');
+
+            const interval = setInterval(() => {
+                stepIndex++;
+                if (stepIndex < steps.length) {
+                    textEl.innerText = steps[stepIndex];
+                } else {
+                    clearInterval(interval);
+                    mostrarShare();
+                }
+            }, 1200); 
+        }
+
+        function mostrarShare() {
+            mostrarTela('etapa-final');
+        }
+
+        // --- LÓGICA DE COMPARTILHAMENTO ---
+        function gerarLinkZap() {
+            // MENSAGEM VIRAL (BEM CURIOSA E SEM FALAR DE ALUGUEL)
+            const texto = "😱 Mentira que tão pagando só pra ter o WhatsApp instalado? O meu deu aprovado R$ 150 aqui na hora. Vê se o seu libera também:";
+            
+            // IMPORTANTE: COLOQUE SEU LINK AQUI
+            const seuSite = "https://SEU_SITE_AQUI.com"; 
+            
+            return `https://api.whatsapp.com/send?text=${encodeURIComponent(texto + " " + seuSite)}`;
+        }
+
+        function compartilharZap() {
+            shareClicked = true;
+            window.open(gerarLinkZap(), '_blank');
+            
+            // Libera o botão após compartilhar
+            setTimeout(() => {
+                const btn = document.getElementById('btn-final-continue');
+                btn.classList.add('active');
+                btn.innerText = "SAQUE LIBERADO >>"; // Mudou para parecer que vai sacar
+            }, 2000);
+        }
+
+        function verificarCompartilhamento() {
+            if (!shareClicked) {
+                alert("⚠️ ATENÇÃO!\n\nSeu saque de R$ 150,00 está pendente. Clique no botão verde e compartilhe para desbloquear o valor.");
+                return;
+            }
+            
+            // REDIRECIONA PARA O CHAT (index.html)
+            // Aqui começa o funil real que explica o aluguel
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
