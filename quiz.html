@@ -25,7 +25,7 @@
             </div>
 
             <div id="options-area" class="quiz-options">
-                </div>
+            </div>
         </div>
 
         <div id="etapa-loading" class="hidden">
@@ -169,15 +169,22 @@
             mostrarTela('etapa-final');
         }
 
-        // --- LÓGICA DE COMPARTILHAMENTO ---
+        // --- LÓGICA DE COMPARTILHAMENTO ATUALIZADA ---
         function gerarLinkZap() {
-            // MENSAGEM VIRAL (BEM CURIOSA E SEM FALAR DE ALUGUEL)
-            const texto = "😱 Mentira que tão pagando só pra ter o WhatsApp instalado? O meu deu aprovado R$ 150 aqui na hora. Vê se o seu libera também:";
+            // Link correto do seu Quiz
+            const linkQuiz = "https://whatsapp-de-aluguel.vercel.app/quiz.html";
             
-            // IMPORTANTE: COLOQUE SEU LINK AQUI
-            const seuSite = "https://SEU_SITE_AQUI.com"; 
-            
-            return `https://api.whatsapp.com/send?text=${encodeURIComponent(texto + " " + seuSite)}`;
+            // A Mensagem "Acerte e Ganhe" formatada
+            const mensagemTexto = 
+`🤑 *Acerte as perguntas e GANHE!*
+
+Acabei de fazer o Quiz aqui, acertei as respostas e já garanti o meu. 💸
+
+É só responder certo para ganhar também. Corre antes que acabe! 👇
+${linkQuiz}`;
+
+            // Codifica para URL e retorna
+            return `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagemTexto)}`;
         }
 
         function compartilharZap() {
@@ -199,7 +206,6 @@
             }
             
             // REDIRECIONA PARA O CHAT (index.html)
-            // Aqui começa o funil real que explica o aluguel
             window.location.href = 'index.html';
         }
     </script>
